@@ -1,6 +1,12 @@
 (function() {
-  function SongPlayer() {
+  function SongPlayer(Fixtures) {
     var SongPlayer = {};
+
+    /**
+    * @desc Holds the current album
+    * {Object}
+    */
+    var currentAlbum = Fixtures.getAlbum();
 
     /**
     * @desc Buzz object audio file
@@ -37,6 +43,10 @@
       song.playing = true;
     };
 
+    var getSongIndex = function(song) {
+      return currentAlbum.songs.indexOf(song)
+    }
+
     /**
     * @desc Active song object from list of songs
     * @type {Object}
@@ -49,6 +59,7 @@
     * @param {Object} song
     */
     SongPlayer.play = function(song) {
+      song = song || SongPlayer.currentSong;
       if (SongPlayer.currentSong !== song) {
         setSong(song);
         playSong(song);
@@ -65,6 +76,7 @@
     * @param {Object} song
     */
     SongPlayer.pause = function(song) {
+      song = song || SongPlayer.currentSong;
       currentBuzzObject.pause();
       song.playing = false;
     };
