@@ -43,6 +43,11 @@
       song.playing = true;
     };
 
+    /**
+    * @function getSongIndex
+    * @desc Returns index of current song playing
+    * @param {Object} song
+    */
     var getSongIndex = function(song) {
       return currentAlbum.songs.indexOf(song)
     }
@@ -79,6 +84,24 @@
       song = song || SongPlayer.currentSong;
       currentBuzzObject.pause();
       song.playing = false;
+    };
+
+    /**
+    * @function SongPlayer.previous
+    * @desc Gets index of current song and decrements it by 1
+    */
+    SongPlayer.previous = function() {
+      var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+      currentSongIndex--;
+
+      if (currentSongIndex < 0) {
+        currentBuzzObject.stop();
+        SongPlayer.currentSong.playing = null;
+      } else {
+        var song = currentAlbum.songs[currentSongIndex];
+        setSong(song);
+        playSong(song);
+      }
     };
 
     return SongPlayer;
